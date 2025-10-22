@@ -1,0 +1,44 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    gcp:
+      sql:
+        enabled: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://[dev-db-host]:3306/[project-name]?zeroDateTimeBehavior=convertToNull"
+    username: root
+    password: ${MYSQL_PASSWORD_DEV}
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        storage_engine: innodb
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show_sql: true
+
+springdoc:
+  swagger-ui:
+    displayOperationId: true
+    enabled: true
+    persist-authorization: true
+
+logging:
+  config: classpath:logback-spring-dev.xml
+  slack:
+    webhook:
+      url: ${LOGGING_SLACK_WEBHOOK_URL}
+
+swagger:
+  url: https://[dev-server-url]
+  description: Dev Server
+
+aes:
+  key: ${AES_KEY}
