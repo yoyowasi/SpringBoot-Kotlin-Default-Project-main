@@ -3,3 +3,9 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+
+# ⬇️ image-updater가 여길 수정하게 만들 자리
+images:
+  - name: docker-repo.minq.work/myapp
+    newName: docker-repo.minq.work/myapp
+    newTag: latest
