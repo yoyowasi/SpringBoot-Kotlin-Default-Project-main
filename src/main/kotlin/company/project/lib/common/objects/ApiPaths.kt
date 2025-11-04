@@ -25,7 +25,7 @@ object ApiPaths {
 
 	// user
 	private const val USER = "$APP/user"
-	const val PROFILE = "$USER/profile5615"
+	const val PROFILE = "$USER/profile66"
 	const val SIGN_UP = "$USER/sign-up"
 	const val LOGIN = "$USER/login"
 	const val REFRESH_TOKEN = "$USER/refresh-token"
