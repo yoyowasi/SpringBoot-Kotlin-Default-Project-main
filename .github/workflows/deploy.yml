@@ -4,14 +4,17 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build_and_push:
-    name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ github.sha }}
+      DATE_TAG: ${{ github.run_number }}
 
     steps:
-      - name: Check out the code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Set up JDK
@@ -20,12 +23,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Grant execute permission for Gradlew
+      - name: Grant permission
         run: chmod +x ./gradlew
 
-      - name: Build and Push Image with Jib
+      - name: Build and Push Image
         env:
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
         run: |
-          ./gradlew jib
+          ./gradlew jib \
+            -Djib.to.tags=latest,${DATE_TAG}-${IMAGE_TAG}
