@@ -11,4 +11,4 @@ spec:
       port: 8080       # 클러스터 내부 포트
       targetPort: 8080 # 컨테이너 포트
       nodePort: 30080  # 외부 노출 포트
-  type: ClusterIP
+  type: NodePort       # ✅ 반드시 NodePort 로 지정
