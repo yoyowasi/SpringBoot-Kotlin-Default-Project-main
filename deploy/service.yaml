@@ -8,6 +8,7 @@ spec:
     app: myapp
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8080       # 클러스터 내부 포트
+      targetPort: 8080 # 컨테이너 포트
+      nodePort: 30080  # 외부 노출 포트
   type: ClusterIP
