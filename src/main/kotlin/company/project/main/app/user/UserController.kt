@@ -20,7 +20,7 @@ class UserController(
 	@Api(
 		path = ApiPaths.PROFILE,
 		method = RequestMethod.GET,
-		summary = "프로필 조회(자신) check2",
+		summary = "프로필 조회(자신)",
 		description = "자기 자신의 프로필을 조회합니다.",
 	)
 	fun getProfile(): ResponseEntity<UserCommonDto> {
