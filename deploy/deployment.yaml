@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: docker-repo.minq.work/myapp  # ✅ 실제 도메인 기반 registry 주소로 변경
+          image: docker-repo.minq.work/myapp:latest  # 그냥 latest 유지
+          imagePullPolicy: Always                   # ✅ 중요!
           ports:
             - containerPort: 8080
           envFrom:

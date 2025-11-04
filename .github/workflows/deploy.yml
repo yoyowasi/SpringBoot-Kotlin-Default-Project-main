@@ -4,15 +4,11 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build_and_push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    env:
-      COMMIT_SHA: ${{ github.sha }}
-      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
     steps:
       - name: Check out the code
@@ -27,18 +23,9 @@ jobs:
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
 
-      # 날짜 태그를 step 출력으로 생성
-      - name: Generate date tag
-        id: date
-        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
-
-      # 여기에서만 steps.date.outputs.date 를 env 로 참조
       - name: Build and Push Image with Jib
         env:
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-          DATE_TAG: ${{ steps.date.outputs.date }}
-          COMMIT_SHA: ${{ env.COMMIT_SHA }}
         run: |
-          ./gradlew jib \
-            -Djib.to.tags=latest,${DATE_TAG}-${COMMIT_SHA}
+          ./gradlew jib
