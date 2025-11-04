@@ -1,3 +1,0 @@
-kustomize:
-  images:
-  - docker-repo.minq.work/myapp:v1
