@@ -9,6 +9,10 @@ jobs:
   build_and_push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      COMMIT_SHA: ${{ github.sha }}
+      DATE_TAG: ${{ steps.date.outputs.date }}
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
     steps:
       - name: Check out the code
@@ -23,9 +27,14 @@ jobs:
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
 
+      - name: Generate date tag
+        id: date
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+
       - name: Build and Push Image with Jib
         env:
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
         run: |
-          ./gradlew jib
+          ./gradlew jib \
+            -Djib.to.tags=latest,${DATE_TAG}-${COMMIT_SHA}
