@@ -77,7 +77,7 @@ tasks.withType<Test> {
 
 jib {
 	from {
-		image = "ghcr.io/graalvm/jdk:java17"
+		image = "amazoncorretto:17-alpine-jdk"
 		platforms {
 			platform {
 				architecture = "amd64"
@@ -94,8 +94,12 @@ jib {
 			when (imageTargetEnv) {
 				"prod" -> "[hostname]/[project-name]/[project-name]/prod"
 				"dev" -> "[hostname]/[gcp-project-name]/[project-name]/dev"
-				else -> "local/[project-name]"
+				else -> "docker-repo.minq.work/myapp:latest"
 			}
+		auth {
+			username = System.getenv("REGISTRY_USER")
+			password = System.getenv("REGISTRY_PASSWORD")
+		}
 	}
 	container {
 		jvmFlags =
