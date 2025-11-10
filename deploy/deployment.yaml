@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: myapp
+      annotations:
+        git-revision-hash: "{{GIT_COMMIT_SHA}}"
     spec:
       containers:
         - name: myapp
