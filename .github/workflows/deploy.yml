@@ -32,7 +32,7 @@ jobs:
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
         run: |
-          ./gradlew jib \
+          ./gradlew clean jib \
             -Djib.to.image=${IMAGE_NAME} \
             -Djib.to.auth.username=${REGISTRY_USER} \
             -Djib.to.auth.password=${REGISTRY_PASSWORD} \
