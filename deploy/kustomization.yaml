@@ -5,4 +5,4 @@ resources:
   - service.yaml
 images:
   - name: docker-repo.minq.work/myapp
-    newTag: 41-8a69cb0f30f0b5bc82c5ed0f99c87ae90002fcc8
+    newTag: 42-c041b8a2f3ec8df9c06fc55d20257800800b1fc7
