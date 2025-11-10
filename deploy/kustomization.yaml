@@ -3,6 +3,3 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-images:
-  - name: docker-repo.minq.work/myapp
-    newTag: 45-5ce0a8e9c5932c2a7822d5c23d6b02e236dc5729
