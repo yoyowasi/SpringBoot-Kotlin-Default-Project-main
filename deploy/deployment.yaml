@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: docker-repo.minq.work/myapp:latest  # 그냥 latest 유지
+          image: docker-repo.minq.work/myapp
           imagePullPolicy: Always                   # ✅ 중요!
           ports:
             - containerPort: 8080
