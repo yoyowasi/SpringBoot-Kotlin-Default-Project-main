@@ -13,7 +13,7 @@ spec:
       labels:
         app: myapp
       annotations:
-        image-update-timestamp: "{{date}}"
+        git-revision-hash: "{{GIT_COMMIT_SHA}}"
     spec:
       containers:
         - name: myapp

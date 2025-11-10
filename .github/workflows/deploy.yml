@@ -32,4 +32,7 @@ jobs:
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
         run: |
           ./gradlew jib \
-            -Djib.to.tags=latest,${DATE_TAG}-${IMAGE_TAG}
+            -Djib.to.image=docker-repo.minq.work/myapp \
+            -Djib.to.auth.username=${REGISTRY_USER} \
+            -Djib.to.auth.password=${REGISTRY_PASSWORD} \
+            -Djib.to.tags=latest,${{ github.run_number }}-${{ github.sha }}
