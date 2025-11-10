@@ -1,4 +1,4 @@
-name: CI CD Test Server
+name: CI-CD Auto Deploy
 
 on:
   push:
@@ -10,8 +10,9 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     env:
-      IMAGE_TAG: ${{ github.sha }}
+      IMAGE_NAME: docker-repo.minq.work/myapp
       DATE_TAG: ${{ github.run_number }}
+      IMAGE_TAG: ${{ github.sha }}
 
     steps:
       - name: Checkout
@@ -26,13 +27,17 @@ jobs:
       - name: Grant permission
         run: chmod +x ./gradlew
 
-      - name: Build and Push Image
+      - name: Build and Push Image (via Jib)
         env:
           REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
         run: |
           ./gradlew jib \
-            -Djib.to.image=docker-repo.minq.work/myapp \
+            -Djib.to.image=${IMAGE_NAME} \
             -Djib.to.auth.username=${REGISTRY_USER} \
             -Djib.to.auth.password=${REGISTRY_PASSWORD} \
-            -Djib.to.tags=latest,${{ github.run_number }}-${{ github.sha }}
+            -Djib.to.tags=latest,${DATE_TAG}-${IMAGE_TAG}
+
+      - name: Notify Build Info (optional)
+        run: |
+          echo "✅ Deployed: ${IMAGE_NAME}:${DATE_TAG}-${IMAGE_TAG}"
