@@ -7,3 +7,5 @@ images:
   - name: myapp
     newName: docker-repo.minq.work/myapp
     newTag: 49-ecea8ed52e6972abb5d1a1fbd23b1182786399c6
+  - name: docker-repo.minq.work/myapp
+    newTag: 63-2c096d7d4a8c120120064cc075ea26f18a381632
