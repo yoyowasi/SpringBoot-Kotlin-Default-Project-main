@@ -3,3 +3,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+images:
+  - name: docker-repo.minq.work/myapp
+    newName: docker-repo.minq.work/myapp
+    digest: sha256:b3875d6c84e912a4a01a9c656b03e5a4bb5d230b6bb4b4d5012c0b0fe2f1ed9e
