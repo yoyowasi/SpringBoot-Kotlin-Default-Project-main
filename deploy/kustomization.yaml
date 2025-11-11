@@ -6,4 +6,4 @@ resources:
 images:
   - name: docker-repo.minq.work/myapp
     newName: docker-repo.minq.work/myapp
-    newTag: 81-c070bc07e889027e9ef9c35d04c62641b9de4b3c
+    newTag: 82-bae91e9cc69092da3670f925d9fe6b988286029e
