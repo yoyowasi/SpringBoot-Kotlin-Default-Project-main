@@ -4,6 +4,6 @@ resources:
   - deployment.yaml
   - service.yaml
 images:
-  - name: myapp
+  - name: docker-repo.minq.work/myapp  # ⬅️ 'myapp'이 아니라 실제 이미지 경로로 수정
     newName: docker-repo.minq.work/myapp
-    newTag: latest
+    newTag: latest # ⬅️ Git에는 latest 또는 현재 배포된 특정 태그 (예: 75-a88538c...)로 명시
