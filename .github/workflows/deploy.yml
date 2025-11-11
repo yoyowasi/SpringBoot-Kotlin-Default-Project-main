@@ -36,8 +36,8 @@ jobs:
             -Djib.to.image=${IMAGE_NAME} \
             -Djib.to.auth.username=${REGISTRY_USER} \
             -Djib.to.auth.password=${REGISTRY_PASSWORD} \
-            -Djib.to.tags=latest,${DATE_TAG}-${IMAGE_TAG}
+            -Djib.to.tags=main
 
       - name: Notify Build Info (optional)
         run: |
-          echo "✅ Deployed: ${IMAGE_NAME}:${DATE_TAG}-${IMAGE_TAG}"
+          echo "✅ Deployed: ${IMAGE_NAME}"
