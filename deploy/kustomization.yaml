@@ -6,4 +6,4 @@ resources:
 images:
   - name: docker-repo.minq.work/myapp
     newName: docker-repo.minq.work/myapp
-    digest: sha256:aa80b0caa17fc26005d2194bf1eb602deec3c4af0e7848c17ad2748eda46b993
+    digest: sha256:0c1a31257bd8a1cb02eca39c4beee9c928a1744f93c2557539c459ab111bbc62
