@@ -42,7 +42,7 @@ logging:
       url: ${LOGGING_SLACK_WEBHOOK_URL}
 
 swagger:
-  url: http://localhost:8080
+  url: https://noma.minq.work
   description: Local Server
 
 aes:
