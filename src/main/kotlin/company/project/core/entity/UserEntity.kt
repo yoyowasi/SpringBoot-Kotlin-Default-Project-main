@@ -31,16 +31,29 @@ data class UserEntity(
 	@JsonIgnore
 	@Enumerated(EnumType.STRING)
 	var role: UserRole? = UserRole.USER,
+	@Column(name = "terms_of_service")
+	var termsOfService: Boolean? = null,
+	@Column(name = "privacy_policy")
+	var privacyPolicy: Boolean? = null,
+	@Column(name = "alert_policy")
+	var alertPolicy: Boolean? = null,
+
 	override var createdAt: Instant? = null,
 	override var updatedAt: Instant? = null,
 ) : BasicEntity(),
 	UserDetails {
+
+
 	fun mappingUserCommonDto(): UserCommonDto =
 		UserCommonDto(
 			idx = idx,
 			uid = uid,
+			id = id,
 			email = email,
 			name = name,
+			termsOfService = termsOfService,
+			privacyPolicy = privacyPolicy,
+			alertPolicy = alertPolicy,
 			createdAt = createdAt,
 			updatedAt = updatedAt,
 		)

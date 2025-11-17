@@ -61,6 +61,9 @@ class UserService(
 				email = userSignUpInDto.email,
 				name = userSignUpInDto.name,
 				createdAt = Instant.now(),
+				termsOfService = userSignUpInDto.termsOfService,
+				privacyPolicy = userSignUpInDto.privacyPolicy,
+				alertPolicy = userSignUpInDto.alertPolicy,
 			).let { userEntity ->
 				userRepository.save(userEntity)
 			}

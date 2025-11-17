@@ -9,6 +9,9 @@ open class UserCommonDto(
 	open var uid: String? = null,
 	open var email: String? = null,
 	open var name: String? = null,
+	open var termsOfService: Boolean? = null,
+	open var privacyPolicy: Boolean? = null,
+	open var alertPolicy: Boolean? = null,
 	open var createdAt: Instant? = null,
 	open var updatedAt: Instant? = null,
 )
