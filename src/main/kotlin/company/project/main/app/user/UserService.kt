@@ -13,6 +13,7 @@ import company.project.lib.common.exception.ServerErrorException
 import company.project.lib.common.util.Jwt
 import company.project.lib.common.util.SHAType
 import company.project.lib.common.util.Sha
+import jakarta.transaction.Transactional
 
 @Service
 class UserService(
@@ -21,23 +22,23 @@ class UserService(
 	private val sha: Sha,
 	private val jwt: Jwt,
 ) {
+
 	/**
 	 * [UserService]
 	 * - 프로필 조회(자신)
 	 */
+	@Transactional
 	fun getProfile(): UserCommonDto {
 		val userTokenInfoDto = authComponent.getUserTokenInfo()
 
 		// 프로필 조회 시 회원 정보 없으면 에러 처리
-		val userEntity =
-			kotlin
-				.runCatching {
-					userRepository.findByUid(userTokenInfoDto.uid)!!
-				}.getOrElse {
-					throw ServerErrorException(INTERNAL_ERROR_CODE.NOT_FOUND_USER)
-				}
-
-		return userEntity.mappingUserCommonDto()
+		val userEntity = kotlin.runCatching {
+			userRepository.findByUid(userTokenInfoDto.uid)!!
+		}.getOrElse {
+			throw ServerErrorException(INTERNAL_ERROR_CODE.NOT_FOUND_USER)
+		}
+		val userCommonDto = userEntity.mappingUserCommonDto()
+		return userCommonDto
 	}
 
 	/**

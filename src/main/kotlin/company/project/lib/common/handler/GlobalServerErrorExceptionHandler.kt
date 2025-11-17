@@ -37,15 +37,13 @@ class GlobalServerErrorExceptionHandler(
 	): ResponseEntity<ServerErrorResponseDto> {
 		val isTest = request.getHeader("test") == "true"
 		val headers = request.headerNames.toList().associateWith { request.getHeader(it) }
-		val userTokenInfoDto =
-			if (
-				serverErrorException.httpStatus != HttpStatus.UNAUTHORIZED &&
-				etc.getActiveProfile() != "local"
-			) {
-				authComponent.getUserTokenInfo()
-			} else {
-				null
-			}
+		val userTokenInfoDto = if(serverErrorException.httpStatus != HttpStatus.UNAUTHORIZED
+			&& (etc.getActiveProfile() == "dev" || etc.getActiveProfile() == "prod")
+		) {
+			authComponent.getUserTokenInfo()
+		} else {
+			null
+		}
 
 		val loggerInputDto =
 			LoggerInputDto(
@@ -93,10 +91,13 @@ class GlobalServerErrorExceptionHandler(
 		val isTest = request.getHeader("test") == "true"
 		val headers = request.headerNames.toList().associateWith { request.getHeader(it) }
 		var userTokenInfoDto: UserTokenInfoDto? = null
-		kotlin
-			.runCatching {
+		runCatching {
+			if( etc.getActiveProfile() == "dev" || etc.getActiveProfile() == "prod") {
 				authComponent.getUserTokenInfo()
-			}.onSuccess {
+			} else {
+				null
+			}
+		}.onSuccess {
 				userTokenInfoDto = it
 			}
 		val loggerInputDto =
@@ -142,10 +143,13 @@ class GlobalServerErrorExceptionHandler(
 		val isTest = request.getHeader("test") == "true"
 		val headers = request.headerNames.toList().associateWith { request.getHeader(it) }
 		var userTokenInfoDto: UserTokenInfoDto? = null
-		kotlin
-			.runCatching {
+		runCatching {
+			if( etc.getActiveProfile() == "dev" || etc.getActiveProfile() == "prod") {
 				authComponent.getUserTokenInfo()
-			}.onSuccess {
+			} else {
+				null
+			}
+		}.onSuccess {
 				userTokenInfoDto = it
 			}
 
@@ -191,10 +195,13 @@ class GlobalServerErrorExceptionHandler(
 		val isTest = request.getHeader("test") == "true"
 		val headers = request.headerNames.toList().associateWith { request.getHeader(it) }
 		var userTokenInfoDto: UserTokenInfoDto? = null
-		kotlin
-			.runCatching {
+		runCatching {
+			if( etc.getActiveProfile() == "dev" || etc.getActiveProfile() == "prod") {
 				authComponent.getUserTokenInfo()
-			}.onSuccess {
+			} else {
+				null
+			}
+		}.onSuccess {
 				userTokenInfoDto = it
 			}
 
@@ -248,10 +255,13 @@ class GlobalServerErrorExceptionHandler(
 		val headers = request.headerNames.toList().associateWith { request.getHeader(it) }
 		var userTokenInfoDto: UserTokenInfoDto? = null
 		exception.printStackTrace()
-		kotlin
-			.runCatching {
+		runCatching {
+			if( etc.getActiveProfile() == "dev" || etc.getActiveProfile() == "prod") {
 				authComponent.getUserTokenInfo()
-			}.onSuccess {
+			} else {
+				null
+			}
+		}.onSuccess {
 				userTokenInfoDto = it
 			}
 

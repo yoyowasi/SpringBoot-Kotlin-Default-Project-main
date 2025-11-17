@@ -6,7 +6,6 @@ import java.time.ZoneId
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
@@ -57,7 +56,7 @@ class SlackWebhook {
 		headers.contentType = MediaType.APPLICATION_JSON
 
 		val entity = HttpEntity(ObjectMapper().writeValueAsString(payload), headers)
-		restTemplate.exchange(slackWebhookURL, HttpMethod.POST, entity, String::class.java)
+//		restTemplate.exchange(slackWebhookURL, HttpMethod.POST, entity, String::class.java)
 	}
 
 	fun warn(loggerInputDto: LoggerInputDto) {
@@ -99,7 +98,7 @@ class SlackWebhook {
 		headers.contentType = MediaType.APPLICATION_JSON
 
 		val entity = HttpEntity(ObjectMapper().writeValueAsString(payload), headers)
-		restTemplate.exchange(slackWebhookURL, HttpMethod.POST, entity, String::class.java)
+//		restTemplate.exchange(slackWebhookURL, HttpMethod.POST, entity, String::class.java)
 	}
 
 	private fun setPayload(
