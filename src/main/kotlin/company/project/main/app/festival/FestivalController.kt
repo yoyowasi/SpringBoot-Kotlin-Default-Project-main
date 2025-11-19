@@ -25,7 +25,7 @@ class FestivalController(
 ) {
 	@Api(
 		path = ApiPaths.FESTIVAL_LIST,
-		method = RequestMethod.POST,
+		method = RequestMethod.GET,
 		summary = "메인페이지 축제 리스트",
 		description = "메인페이지 축제 리스트 입니다.",
 	)
