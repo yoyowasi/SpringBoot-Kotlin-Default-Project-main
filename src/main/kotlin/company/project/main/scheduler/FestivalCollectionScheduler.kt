@@ -13,7 +13,7 @@ class FestivalCollectionScheduler(
 	private val festivalSaveService: FestivalSaveService
 ) {
 
-	@Scheduled(fixedDelay = 10000000000)
+//	@Scheduled(fixedDelay = 10000000000)
 	fun festivalCollection() {
 		val festivalData = festivalCollection.getJsonData()
 
