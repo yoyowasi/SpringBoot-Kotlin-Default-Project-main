@@ -37,9 +37,9 @@ data class FestivalRecordDto(
 	@JsonProperty("소재지지번주소")
 	val lnmadr: String?,
 	@JsonProperty("위도")
-	val latitude: String?,
+	var latitude: String?,
 	@JsonProperty("경도")
-	val longitude: String?,
+	var longitude: String?,
 	@JsonProperty("데이터기준일자")
 	val dataStdDe: String?,
 	@JsonProperty("제공기관코드")

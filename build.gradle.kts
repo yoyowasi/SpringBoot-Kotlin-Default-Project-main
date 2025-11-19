@@ -64,7 +64,8 @@ dependencies {
 	implementation("org.json:json:20231013")
 	implementation("org.liquibase:liquibase-core")
 	implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
-
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 tasks.withType<KotlinCompile> {

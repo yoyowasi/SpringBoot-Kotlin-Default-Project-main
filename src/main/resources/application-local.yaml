@@ -62,3 +62,5 @@ sha:
 
 api:
   key: ${DATA_GO_API_KEY}
+bing:
+  key: ${BING_API}

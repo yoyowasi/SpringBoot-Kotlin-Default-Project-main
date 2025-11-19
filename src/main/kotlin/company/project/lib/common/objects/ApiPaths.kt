@@ -30,6 +30,11 @@ object ApiPaths {
 	const val LOGIN = "$USER/login"
 	const val REFRESH_TOKEN = "$USER/refresh-token"
 
+	// festival
+	private const val FESTIVAL = "$APP/festival"
+	const val FESTIVAL_LIST = "$FESTIVAL/list"
+	const val FESTIVAL_DETAIL = "$FESTIVAL/{id}"
+
 	// admin
 	private const val ADMIN = "/admin"
 }
