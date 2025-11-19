@@ -28,6 +28,9 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog-master.yml
+  data:
+    redis:
+      host: localhost
 
 springdoc:
   swagger-ui:
@@ -42,7 +45,8 @@ logging:
       url: ${LOGGING_SLACK_WEBHOOK_URL}
 
 swagger:
-  url: https://noma.minq.work
+#  url: https://noma.minq.work/
+  url: http://localhost:8080/
   description: Local Server
 
 aes:
@@ -55,3 +59,6 @@ jwt:
 
 sha:
   key: ${SHA_KEY}
+
+api:
+  key: ${DATA_GO_API_KEY}
