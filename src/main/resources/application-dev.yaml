@@ -2,17 +2,21 @@ spring:
   config:
     activate:
       on-profile: dev
+
   servlet:
     multipart:
       max-file-size: 5MB
       max-request-size: 10MB
+
   main:
     allow-bean-definition-overriding: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_HOST}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -25,9 +29,11 @@ spring:
       ddl-auto: validate
     open-in-view: false
     show_sql: true
+
   liquibase:
     enabled: true
     change-log: classpath:db/changelog-master.yml
+
   data:
     redis:
       host: argocd-redis.argocd.svc.cluster.local
@@ -39,12 +45,6 @@ springdoc:
     displayOperationId: true
     enabled: true
     persist-authorization: true
-
-logging:
-  config: classpath:logback-spring-local.xml
-  slack:
-    webhook:
-      url: ${LOGGING_SLACK_WEBHOOK_URL}
 
 swagger:
   url: https://noma.minq.work/

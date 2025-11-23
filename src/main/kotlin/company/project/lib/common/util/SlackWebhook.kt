@@ -14,9 +14,6 @@ import company.project.lib.common.objects.Util
 
 @Component
 class SlackWebhook {
-	@Value("\${logging.slack.webhook.url}")
-	lateinit var slackWebhookURL: String
-
 	fun error(loggerInputDto: LoggerInputDto) {
 		val utc = Instant.now()
 		val kst = utc.plusSeconds(32400)
