@@ -12,22 +12,22 @@ class FestivalCollectionScheduler(
 	private val festivalCollection: FestivalCollection,
 	private val festivalSaveService: FestivalSaveService
 ) {
-
-//	@Scheduled(fixedDelay = 10000000000)
+//	@Scheduled(fixedDelay = 24 * 60 * 60 * 1000)  // 24시간마다 실행
+	@Scheduled(cron = "0 0 0 * * ?")	// 00시에 매일 실행
 	fun festivalCollection() {
 		val festivalData = festivalCollection.getJsonData()
 
-		festivalData.records.forEach { record ->
+		festivalData.records.map { record ->
 			if (record.latitude.isNullOrBlank() || record.longitude.isNullOrBlank()) {
 				val response = festivalCollection.getLatitudeLongtide(record)
 				record.latitude = response?.documents?.firstOrNull()?.y ?: ""
 				record.longitude = response?.documents?.firstOrNull()?.x ?: ""
 			}
-//			val image = record.fstvlNm?.let {festivalCollection.searchFestivalImage(it)  }
-			val image = "https://love.seoul.go.kr/tmda/Pds/Board/seoul_news_write/Editor/3[1].jpg"
+			val image = record.fstvlNm?.let {festivalCollection.searchFestivalImage(it)?.items?.firstOrNull()?.link  }
 
 			val classifiedTags = parseAndClassifyRecord(record.fstvlCo)
 			festivalSaveService.saveFestival(record, classifiedTags , image)
+			return@map
 		}
 	}
 

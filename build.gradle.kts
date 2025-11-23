@@ -47,6 +47,9 @@ dependencies {
 	testRuntimeOnly("com.h2database:h2")
 	implementation("org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.2.8.RELEASE")
 	implementation("com.vladmihalcea:hibernate-types-60:2.20.0")
+	// Database Redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("io.lettuce:lettuce-core") // 기본 Redis 클라이언트
 
 	// Util
 	compileOnly("org.projectlombok:lombok")

@@ -1,5 +1,6 @@
 package company.project.core.entity
 
+import company.project.core.dto.app.festival.response.FestivalListResponseDto
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
@@ -84,4 +85,31 @@ open class Festival {
 	@Size(max = 500)
 	@Column(name = "image", length = 500)
 	open var image: String? = null
+
+	fun toDto(category: List<String?>?=null): FestivalListResponseDto {
+		return FestivalListResponseDto(
+			id = this@Festival.id!!,
+			festivalName = this@Festival.festivalName,
+			holdPlace = this@Festival.holdPlace,
+			festivalStartDate = this@Festival.festivalStartDate,
+			festivalEndDate = this@Festival.festivalEndDate,
+			rawContent = this@Festival.rawContent,
+			operatorInstitution = this@Festival.operatorInstitution,
+			hostInstitution = this@Festival.hostInstitution,
+			sponsorInstitution = this@Festival.sponsorInstitution,
+			tel = this@Festival.tel,
+			homepageUrl = this@Festival.homepageUrl,
+			relatedInfo = this@Festival.relatedInfo,
+			roadAddress = this@Festival.roadAddress,
+			landAddress = this@Festival.landAddress,
+			latitude = this@Festival.latitude,
+			longitude = this@Festival.longitude,
+			dataStandardDate = this@Festival.dataStandardDate,
+			providerInsttCode = this@Festival.providerInsttCode,
+			providerInsttName = this@Festival.providerInsttName,
+			image = this@Festival.image,
+			like = false,
+			category = category
+		)
+	}
 }

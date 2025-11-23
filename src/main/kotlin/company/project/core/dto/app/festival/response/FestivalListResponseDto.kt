@@ -1,9 +1,9 @@
-package company.project.core.dto.app.festival
+package company.project.core.dto.app.festival.response
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
 data class FestivalListResponseDto (
+	val id: Long,
 	val festivalName: String?,
 	val holdPlace: String?,
 	val festivalStartDate: LocalDate?,
@@ -23,5 +23,7 @@ data class FestivalListResponseDto (
 	val providerInsttCode: String?,
 	val providerInsttName: String?,
 	val image: String?,
-	val category: List<String?>,
+	val like: Boolean? = false,
+	val likeCount: Long = 0,
+	val category: List<String?>?,
 )

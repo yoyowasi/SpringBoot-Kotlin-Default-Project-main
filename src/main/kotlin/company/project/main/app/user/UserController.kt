@@ -16,7 +16,7 @@ import company.project.lib.common.objects.ApiPaths
 class UserController(
 	private val userService: UserService,
 ) {
-	@Auth(role = UserRole.ADMIN)
+	@Auth(role = UserRole.USER)
 	@Api(
 		path = ApiPaths.PROFILE,
 		method = RequestMethod.GET,

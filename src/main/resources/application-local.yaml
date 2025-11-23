@@ -45,8 +45,8 @@ logging:
       url: ${LOGGING_SLACK_WEBHOOK_URL}
 
 swagger:
-  url: https://noma.minq.work/
-#  url: http://localhost:8080/
+#  url: https://noma.minq.work/
+  url: http://localhost:8080/
   description: Local Server
 
 aes:
@@ -62,5 +62,7 @@ sha:
 
 api:
   key: ${DATA_GO_API_KEY}
-bing:
-  key: ${BING_API}
+
+naver:
+  client_id: ${NAVER_CLIENT_ID}
+  client_secret: ${NAVER_CLIENT_SECRET}

@@ -16,23 +16,29 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
 import org.springframework.web.util.UriComponentsBuilder
+data class NaverImageResponse(
+	val items: List<NaverImageItem>
+)
 
+data class NaverImageItem(
+	val link: String
+)
 @Component
 class FestivalCollection(
 	private val http : Http
 ) {
 	@Value("\${api.key}")
 	private lateinit var key: String
-	@Value("\${bing.key}")
-	private lateinit var bingKey: String
+	@Value("\${naver.client_id}")
+	private lateinit var clientId: String
+	@Value("\${naver.client_secret}")
+	private lateinit var clientSecret: String
 
 
 	private val endpoint = "http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api"
 	private val locateEndpoint = "https://dapi.kakao.com/v2/local/search/address.json?query="
 	private val objectMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
-	private val bingEndpoint = "https://api.bing.microsoft.com/v7.0/images/search"
-
-
+	private val naverEndpoint = "https://openapi.naver.com/v1/search/image"
 
 
 	fun request(page: Int): String? {
@@ -54,18 +60,19 @@ class FestivalCollection(
 		return http.get(url, headers, String::class.java)
 	}
 
-	fun searchFestivalImage(festivalName: String): BingImageResponse? {
-		val uri = UriComponentsBuilder.fromHttpUrl(bingEndpoint)
-			.queryParam("q", "$festivalName")
-			.queryParam("count", 1)   // 1장만 가져오기
+	fun searchFestivalImage(festivalName: String): NaverImageResponse? {
+		val uri = UriComponentsBuilder.fromHttpUrl(naverEndpoint)
+			.queryParam("query", festivalName)
+			.queryParam("sort", "sim")
+			.queryParam("display", 1)
 			.build()
-			.toString()
-
+			.toUriString()
 
 		val headers = mapOf(
-			"Ocp-Apim-Subscription-Key" to bingKey)
-
-		return http.get(uri, headers, BingImageResponse::class.java)
+			"X-Naver-Client-Id" to clientId,
+			"X-Naver-Client-Secret" to clientSecret
+		)
+		return http.get(uri, headers, NaverImageResponse::class.java)
 	}
 	fun getJsonData(): FestivalDataResponseDto {
 		// classpath: data/json/festival.json

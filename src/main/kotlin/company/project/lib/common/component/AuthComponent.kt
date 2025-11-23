@@ -30,12 +30,11 @@ class AuthComponent(
 	fun getUserTokenInfo(role: UserRole? = UserRole.USER): UserTokenInfoDto {
 		val requestAttributes = RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
 		val request = requestAttributes.request
-		val authorization = request.getHeader("Authorization") ?: throw ServerErrorException(INTERNAL_ERROR_CODE.AUTHORIZATION_NOT_FOUND)
-		val token = authorization.substring(7)
+		val authorization = request.getHeader("Authorization")
+		val token = authorization?.substring(7)
 
 		return kotlin.runCatching {
 			if (etc.getActiveProfile() != Profiles.NOT_TEST) {
-//        val firebaseToken = firebaseAuth.verifyIdToken(token)
 				val customToken = jwt.validateToken(token)
 
 				when (role) {

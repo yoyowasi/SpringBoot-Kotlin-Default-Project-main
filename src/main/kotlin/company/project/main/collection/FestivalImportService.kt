@@ -21,30 +21,37 @@ class FestivalSaveService(
 	@Transactional
 	fun saveFestival(record: FestivalRecordDto, tags: List<FestivalCollectionScheduler.ClassifiedTagDto>, image: String? = null) {
 
+		val fastivalDto = Festival().apply {
+			festivalName = record.fstvlNm
+			holdPlace = record.holdPlace
+			festivalStartDate = record.fstvlStartDate?.let { LocalDate.parse(it) }
+			festivalEndDate = record.fstvlEndDate?.let { LocalDate.parse(it) }
+			rawContent = record.fstvlCo
+			operatorInstitution = record.oprtInstitNm
+			hostInstitution = record.hostInstitNm
+			sponsorInstitution = record.sponInstitNm
+			tel = record.telno
+			homepageUrl = record.homepageUrl
+			relatedInfo = record.relInfo
+			roadAddress = record.rdnmadr
+			landAddress = record.lnmadr
+			latitude = record.latitude?.toDoubleOrNull()
+			longitude = record.longitude?.toDoubleOrNull()
+			dataStandardDate = record.dataStdDe?.let { LocalDate.parse(it) }
+			providerInsttCode = record.providerInsttCode
+			providerInsttName = record.providerInsttNm
+			this.image = image
+		}
 		// 1) Festival 저장
-		var festival = festivalRepository.save(
-			Festival().apply {
-				festivalName = record.fstvlNm
-				holdPlace = record.holdPlace
-				festivalStartDate = record.fstvlStartDate?.let { LocalDate.parse(it) }
-				festivalEndDate = record.fstvlEndDate?.let { LocalDate.parse(it) }
-				rawContent = record.fstvlCo
-				operatorInstitution = record.oprtInstitNm
-				hostInstitution = record.hostInstitNm
-				sponsorInstitution = record.sponInstitNm
-				tel = record.telno
-				homepageUrl = record.homepageUrl
-				relatedInfo = record.relInfo
-				roadAddress = record.rdnmadr
-				landAddress = record.lnmadr
-				latitude = record.latitude?.toDoubleOrNull()
-				longitude = record.longitude?.toDoubleOrNull()
-				dataStandardDate = record.dataStdDe?.let { LocalDate.parse(it) }
-				providerInsttCode = record.providerInsttCode
-				providerInsttName = record.providerInsttNm
-				this.image = image
-			}
+		// 기존 데이터의 축제제목과 축제시작일자가 동일한 데이터가 있으면, 해당 ID로 업데이트
+		val existing = festivalRepository.findByFestivalNameAndFestivalStartDate(
+			fastivalDto.festivalName,
+			fastivalDto.festivalStartDate
 		)
+		existing?.let { found ->
+			fastivalDto.id = found.id
+		}
+		val festival = festivalRepository.save(fastivalDto)
 
 		// 2) 태그 저장 및 매핑
 		tags.forEach { tagDto ->

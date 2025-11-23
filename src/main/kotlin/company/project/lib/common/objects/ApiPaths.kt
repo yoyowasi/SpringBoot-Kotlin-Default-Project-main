@@ -23,17 +23,29 @@ object ApiPaths {
 	private const val DEV = "$APP/dev"
 	const val GET_PW = "$DEV/get-pw/{pw}"
 
+	// festival
+	private const val FESTIVAL = "$APP/festival"
+	const val FESTIVAL_LIST = "$FESTIVAL/list"
+	const val FESTIVAL_SEARCH = "$FESTIVAL/{keyword}"
+	const val FESTIVAL_TOGGLE_LIKE = "$FESTIVAL/{festivalId}/like"
+
+	private const val FESTIVAL_REVIEW = "$FESTIVAL/review"
+	const val REVIEW = "$FESTIVAL_REVIEW/{festivalId}"
+
+	private const val FESTIVAL_JOB = "$FESTIVAL/job"
+	const val JOB_LIST = "$FESTIVAL_JOB/list"
+	const val JOB = "$FESTIVAL_JOB/{festivalId}"
+	const val JOB_APPLY = "$JOB/{jobId}/apply"
+	const val JOB_APPLY_ACCEPT = "$JOB/apply/accept"
+	const val JOB_APPLICANTS = "$JOB/applicants"
+
+
 	// user
 	private const val USER = "$APP/user"
 	const val PROFILE = "$USER/profile"
 	const val SIGN_UP = "$USER/sign-up"
 	const val LOGIN = "$USER/login"
 	const val REFRESH_TOKEN = "$USER/refresh-token"
-
-	// festival
-	private const val FESTIVAL = "$APP/festival"
-	const val FESTIVAL_LIST = "$FESTIVAL/list"
-	const val FESTIVAL_DETAIL = "$FESTIVAL/{id}"
 
 	// admin
 	private const val ADMIN = "/admin"
