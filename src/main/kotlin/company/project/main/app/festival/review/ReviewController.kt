@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "Festival Review", description = "축제 리뷰")
@@ -21,6 +22,19 @@ class ReviewController(private val reviewService: ReviewService) {
 		method = RequestMethod.GET,
 		summary = "축제 리뷰 리스트",
 		description = "축제 리뷰 리스트 입니다.",
+	)
+	fun festivalReviewListAll(
+		@RequestParam page: Int,
+	): ResponseEntity<List<FestivalReviewResponseDto>> {
+		val result = reviewService.getReviewsAll(page)
+		return ResponseEntity.ok().body(result)
+	}
+
+	@Api(
+		path = ApiPaths.FESTIVAL_REVIEW_LIST_SELECTED,
+		method = RequestMethod.GET,
+		summary = "특정 축제 리뷰 리스트",
+		description = "특정 축제 리뷰 리스트 입니다.",
 	)
 	fun festivalReviewList(
 		@PathVariable festivalId: Long,

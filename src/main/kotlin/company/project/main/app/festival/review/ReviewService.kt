@@ -10,6 +10,8 @@ import company.project.lib.common.enum.INTERNAL_ERROR_CODE
 import company.project.lib.common.exception.ServerErrorException
 import jakarta.transaction.Transactional
 import java.time.Instant
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 
@@ -74,5 +76,18 @@ class ReviewService(
 			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_REVIEW_DELETE_OWNERSHIP_MISMATCH)
 		}
 		festivalReviewRepository.delete(review)
+	}
+
+	@Transactional()
+	fun getReviewsAll(page: Int): List<FestivalReviewResponseDto> {
+		val pageRequest = PageRequest.of(
+			(page - 1).coerceAtLeast(0),
+			50,
+			Sort.by(Sort.Direction.DESC, "createdAt")   // 최근순 정렬
+		)
+
+		val reviews = festivalReviewRepository.findAll(pageRequest)
+
+		return reviews.content.map { it.toResponse() }
 	}
 }

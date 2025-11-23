@@ -34,9 +34,10 @@ object ApiPaths {
 
 	// review actions
 	const val FESTIVAL_REVIEW_CREATE = FESTIVAL_REVIEW
-	const val FESTIVAL_REVIEW_LIST = FESTIVAL_REVIEW
+	const val FESTIVAL_REVIEW_LIST_SELECTED = FESTIVAL_REVIEW
 
-	const val FESTIVAL_REVIEW_DETAIL = "$FESTIVAL/reviews/{festivalReviewId}"
+	const val FESTIVAL_REVIEW_LIST = "$FESTIVAL/reviews"
+	const val FESTIVAL_REVIEW_DETAIL = "$FESTIVAL_REVIEW_LIST/{festivalReviewId}"
 
 	private const val FESTIVAL_JOB = "$FESTIVAL/job"
 	const val JOB_LIST = "$FESTIVAL_JOB/list"
