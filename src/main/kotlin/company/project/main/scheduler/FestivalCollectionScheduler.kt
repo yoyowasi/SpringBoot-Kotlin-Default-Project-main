@@ -12,8 +12,8 @@ class FestivalCollectionScheduler(
 	private val festivalCollection: FestivalCollection,
 	private val festivalSaveService: FestivalSaveService
 ) {
-//	@Scheduled(fixedDelay = 24 * 60 * 60 * 1000)  // 24시간마다 실행
-	@Scheduled(cron = "0 0 0 * * ?")	// 00시에 매일 실행
+	@Scheduled(fixedDelay = 24 * 60 * 60 * 1000)  // 24시간마다 실행
+//	@Scheduled(cron = "0 0 0 * * ?")	// 00시에 매일 실행
 	fun festivalCollection() {
 		val festivalData = festivalCollection.getJsonData()
 
@@ -25,7 +25,7 @@ class FestivalCollectionScheduler(
 			}
 			val image = record.fstvlNm?.let {festivalCollection.searchFestivalImage(it)?.items?.firstOrNull()?.link  }
 
-			val classifiedTags = parseAndClassifyRecord(record.fstvlCo)
+			val classifiedTags = parseAndClassifyRecord(record.fstvlCo) + parseAndClassifyRecord(record.fstvlNm)
 			festivalSaveService.saveFestival(record, classifiedTags , image)
 			return@map
 		}

@@ -8,7 +8,11 @@ import org.springframework.stereotype.Repository
 @Repository
 interface FestivalTagMapRepository : JpaRepository<FestivalTagMap, Long> {
 
-	@Query("select f from FestivalTagMap f where upper(f.originalToken) like upper(?1)")
+	@Query("""
+		select f 
+		from FestivalTagMap f 
+		where upper(f.originalToken) like concat('%', upper(:keyword), '%')
+	""")
 	fun findByOriginalTokenLikeIgnoreCase(originalToken: String): List<FestivalTagMap>?
 
 	fun existsByFestivalIdAndTagId(festivalId: Long, tagId: Long): Boolean
