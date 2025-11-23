@@ -32,7 +32,7 @@ interface UserFestivalLikeRepository : JpaRepository<UserFestivalLike, Long> {
 	): List<FestivalLikeCountProjection>
 
 
-	fun findByUserUidAndFestival_Id(userUid: String, id: Long): UserFestivalLike
+	fun findByUserUidAndFestival_Id(userUid: String, id: Long): UserFestivalLike?
 }
 interface FestivalLikeCountProjection {
 	fun getFestivalId(): Long
