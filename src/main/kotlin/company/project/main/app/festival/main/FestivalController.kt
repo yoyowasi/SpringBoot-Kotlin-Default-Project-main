@@ -34,6 +34,19 @@ class FestivalController(
 	}
 
 	@Api(
+		path = ApiPaths.FestIVAL_DETAIL,
+		method = RequestMethod.GET,
+		summary = "축제 상세 보기",
+		description = "축제 상세 보기 입니다.",
+	)
+	fun festivalDetail(
+		@PathVariable festivalId: Long,
+	): ResponseEntity<FestivalListResponseDto> {
+		val result = festivalService.get(festivalId)
+		return ResponseEntity.ok().body(result)
+	}
+
+	@Api(
 		path = ApiPaths.FESTIVAL_SEARCH,
 		method = RequestMethod.GET,
 		summary = "축제 검색 보기",

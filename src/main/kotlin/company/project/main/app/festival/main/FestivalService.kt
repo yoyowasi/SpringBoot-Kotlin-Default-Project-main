@@ -26,6 +26,25 @@ class FestivalService(
 	private val festivalComponent: FestivalComponent
 ) {
 	@Transactional
+	fun get(festivalId: Long): FestivalListResponseDto {
+		val userTokenInfoDto = authComponent.getUserTokenInfoOrNull()
+		val festival = festivalRepository.findById(festivalId)
+			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_NOT_FOUND) }
+		val category = festivalTagMapRepository.findAllByFestivalId(festivalId).map {
+			it.tag?.category
+		}.distinct()
+		// 좋아요 여부
+		val liked =
+			userFestivalLikeRepository.existsByUserUidAndFestivalId(userTokenInfoDto?.uid, festivalId)
+		return festival.toDto().copy(
+			like = liked,
+			likeCount = festivalComponent.getCount(festivalId) ?: 0L,
+			category = category
+		)
+	}
+
+
+	@Transactional
 	fun getList(page: Int): List<FestivalListResponseDto> {
 		val userTokenInfoDto = authComponent.getUserTokenInfoOrNull()
 

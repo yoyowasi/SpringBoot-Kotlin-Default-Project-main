@@ -26,7 +26,8 @@ object ApiPaths {
 	// festival
 	private const val FESTIVAL = "$APP/festival"
 	const val FESTIVAL_LIST = "$FESTIVAL/list"
-	const val FESTIVAL_SEARCH = "$FESTIVAL/{keyword}"
+	const val FestIVAL_DETAIL = "$FESTIVAL/{festivalId}"
+	const val FESTIVAL_SEARCH = "$FESTIVAL/{keyword}/search"
 	const val FESTIVAL_TOGGLE_LIKE = "$FESTIVAL/{festivalId}/like"
 
 	private const val FESTIVAL_REVIEW = "$FESTIVAL/review"
