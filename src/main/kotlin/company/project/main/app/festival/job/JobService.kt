@@ -72,6 +72,7 @@ class JobService(
 			this.introduction = req.introduction
 			this.career = req.career
 			this.createdAt = Instant.now()
+			this.updatedAt = Instant.now()
 		}
 
 		job.applicantCount = job.applicantCount?.plus(1)
