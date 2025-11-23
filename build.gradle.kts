@@ -10,10 +10,10 @@ plugins {
 }
 
 val imageTargetEnv =
-	if (properties.containsKey("projectDataImageTargetEnv")) {
-		property("projectDataImageTargetEnv")
+	if (project.hasProperty("projectDataImageTargetEnv")) {
+		project.property("projectDataImageTargetEnv")
 	} else {
-		"local"
+		System.getenv("SPRING_PROFILES_ACTIVE") ?: "local"
 	}
 
 group = "project"
