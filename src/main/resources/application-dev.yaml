@@ -31,6 +31,8 @@ spring:
   data:
     redis:
       host: argocd-redis.argocd.svc.cluster.local
+      port: 6379
+      password: ${REDIS_PASSWORD}
 
 springdoc:
   swagger-ui:
