@@ -52,7 +52,6 @@ class AuthAspect(
 				is Auths -> annotation.role
 				else -> return
 			}
-
 		authComponent.getUserTokenInfo(role)
 	}
 }

@@ -23,6 +23,13 @@ class AuthComponent(
 	@Autowired private val memory: Memory,
 	private val userRepository: UserRepository,
 ) {
+	fun getUserTokenInfoOrNull(role: UserRole? = UserRole.USER): UserTokenInfoDto? {
+		return try {
+			getUserTokenInfo(role)
+		} catch (e: ServerErrorException) {
+			null
+		}
+	}
 	/**
 	 * [AuthComponent]
 	 * - firebase 인증 관련 컴포넌트

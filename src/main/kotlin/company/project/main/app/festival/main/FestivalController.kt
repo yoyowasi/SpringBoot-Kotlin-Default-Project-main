@@ -26,7 +26,6 @@ class FestivalController(
 		summary = "축제 리스트",
 		description = "축제 리스트 입니다.",
 	)
-	@Auth(role = UserRole.USER)
 	fun festivalList(
 		@RequestParam page: Int,
 	): ResponseEntity<List<FestivalListResponseDto>> {

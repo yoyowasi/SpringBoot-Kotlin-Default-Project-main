@@ -1,10 +1,7 @@
 package company.project.main.app.festival.main
 
-import company.project.core.dto.app.festival.request.FestivalReviewRequestDto
 import company.project.core.dto.app.festival.response.FestivalLikeResponseDto
 import company.project.core.dto.app.festival.response.FestivalListResponseDto
-import company.project.core.dto.app.festival.response.FestivalReviewResponseDto
-import company.project.core.entity.FestivalReview
 import company.project.core.entity.UserFestivalLike
 import company.project.infra.repository.FestivalRepository
 import company.project.infra.repository.FestivalReviewRepository
@@ -14,6 +11,7 @@ import company.project.lib.common.component.AuthComponent
 import company.project.lib.common.enum.INTERNAL_ERROR_CODE
 import company.project.lib.common.exception.ServerErrorException
 import jakarta.transaction.Transactional
+import java.lang.Exception
 import java.time.Instant
 import java.time.LocalDate
 import org.springframework.data.domain.PageRequest
@@ -25,14 +23,11 @@ class FestivalService(
 	val festivalTagMapRepository: FestivalTagMapRepository,
 	private val authComponent: AuthComponent,
 	private val userFestivalLikeRepository: UserFestivalLikeRepository,
-	private val festivalReviewRepository: FestivalReviewRepository,
 	private val festivalComponent: FestivalComponent
 ) {
 	@Transactional
 	fun getList(page: Int): List<FestivalListResponseDto> {
-		val userTokenInfoDto = try {
-			authComponent.getUserTokenInfo()
-		}catch (e: ServerErrorException){ null }
+		val userTokenInfoDto = authComponent.getUserTokenInfoOrNull()
 
 		val today = LocalDate.now()
 
