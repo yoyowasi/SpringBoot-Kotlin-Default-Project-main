@@ -35,9 +35,9 @@ class FestivalService(
 		}.distinct()
 		// 좋아요 여부
 		val liked =
-			userFestivalLikeRepository.existsByUserUidAndFestivalId(userTokenInfoDto?.uid, festivalId)
+			userTokenInfoDto?.uid?.let { userFestivalLikeRepository.findByUserUidAndFestival_Id(it, festivalId) }
 		return festival.toDto().copy(
-			like = liked,
+			like = liked?.like == true,
 			likeCount = festivalComponent.getCount(festivalId) ?: 0L,
 			category = category
 		)
@@ -61,9 +61,9 @@ class FestivalService(
 			}.distinct()
 			// 좋아요 여부
 			val liked =
-				userFestivalLikeRepository.existsByUserUidAndFestivalId(userTokenInfoDto?.uid, festivalId)
+				userTokenInfoDto?.uid?.let { userFestivalLikeRepository.findByUserUidAndFestival_Id(it, festivalId) }
 			festival.toDto().copy(
-				like = liked,
+				like = liked?.like == true,
 				likeCount = festivalComponent.getCount(festivalId) ?: 0L,
 				category = category
 			)
