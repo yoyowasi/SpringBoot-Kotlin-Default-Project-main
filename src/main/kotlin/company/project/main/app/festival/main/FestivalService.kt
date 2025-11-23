@@ -95,13 +95,13 @@ class FestivalService(
 			likeToggle = userFestivalLikeRepository.save(like).like == true
 			festivalComponent.incr(festivalId)
 		} else {
-			val userFestivalLike = userFestivalLikeRepository.findByUserUidAndFestival_Id(user.uid, festivalId)
-			if(userFestivalLike.like == true) { // 좋아요 취소
+			val userFestivalLike = userFestivalLikeRepository.findByUserUidAndFestival_Id(user.uid, festivalId)!!
+			if(userFestivalLike?.like == true) { // 좋아요 취소
 				userFestivalLike.like = false
 				likeToggle = userFestivalLikeRepository.save(userFestivalLike).like == true
 				festivalComponent.decr(festivalId)
 			}else{ // 좋아요 다시 누르기
-				userFestivalLike.like = true
+				userFestivalLike?.like = true
 				likeToggle = userFestivalLikeRepository.save(userFestivalLike).like == true
 				festivalComponent.incr(festivalId)
 			}

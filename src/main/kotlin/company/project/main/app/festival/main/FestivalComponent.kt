@@ -47,7 +47,7 @@ class FestivalComponent (
 	}
 	private fun syncCountFromDb(festivalId: Long): Long {
 		val count = userFestivalLikeRepository.countByFestivalIds(listOf(festivalId))
-			.firstOrNull()
+			?.firstOrNull()
 			?.getLikeCount()
 			?: 0L
 

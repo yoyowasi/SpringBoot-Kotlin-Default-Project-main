@@ -29,7 +29,7 @@ interface UserFestivalLikeRepository : JpaRepository<UserFestivalLike, Long> {
 	)
 	fun countByFestivalIds(
 		@Param("festivalIds") festivalIds: List<Long>
-	): List<FestivalLikeCountProjection>
+	): List<FestivalLikeCountProjection>?
 
 
 	fun findByUserUidAndFestival_Id(userUid: String, id: Long): UserFestivalLike?
