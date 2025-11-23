@@ -1,5 +1,6 @@
 package company.project.core.dto.app.festival.response
 
+import company.project.core.entity.ApplyStatus
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -21,6 +22,7 @@ data class JobResponse(
 	val deadline: LocalDate?,
 	val applicantCount: Int,
 	val hiredCount: Int,
+	var status: ApplyStatus,
 	var alreadyApplied: Boolean?=false,
 	val createdAt: LocalDateTime?=null,
 	val updatedAt: LocalDateTime?=null,

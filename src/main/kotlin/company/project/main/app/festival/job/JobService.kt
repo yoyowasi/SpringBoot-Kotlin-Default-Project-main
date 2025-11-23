@@ -185,6 +185,8 @@ class JobService(
 			it.toResponse().apply {
 				val alreadyApplied = festivalJobApplyRepository.existsByJobIdAndApplicantUid(it.id!!, user?.uid)
 				this.alreadyApplied = alreadyApplied
+				this.status = festivalJobApplyRepository.findByJobIdAndApplicantUid(it.id!!, user?.uid ?: "")?.status
+					?: ApplyStatus.NONE
 				this.employerName = it.employerUid?.let { uid -> userRepository.findByUid(uid) }?.name ?: "알 수 없음"
 			}
 		}

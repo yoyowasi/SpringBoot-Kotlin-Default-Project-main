@@ -102,6 +102,7 @@ open class FestivalJob {
 			applicantCount = this@FestivalJob.applicantCount ?: 0,
 			hiredCount = this@FestivalJob.hiredCount ?: 0,
 			alreadyApplied = false,
+			status = ApplyStatus.NONE,
 			createdAt = LocalDateTime.ofInstant(this@FestivalJob.createdAt, java.time.ZoneId.systemDefault()),
 			updatedAt = LocalDateTime.ofInstant(this@FestivalJob.updatedAt,java.time.ZoneId.systemDefault()),
 		)

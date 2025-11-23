@@ -88,5 +88,5 @@ open class FestivalJobApply {
 
 
 enum class ApplyStatus {
-	APPLIED, ACCEPTED, REJECTED
+	APPLIED, ACCEPTED, REJECTED, NONE
 }
