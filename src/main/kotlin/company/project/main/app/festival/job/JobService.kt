@@ -17,6 +17,8 @@ import company.project.lib.common.exception.ServerErrorException
 import jakarta.transaction.Transactional
 import java.time.Instant
 import java.time.LocalDate
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -158,14 +160,22 @@ class JobService(
 	}
 
 	@Transactional
-	fun getUrgentJobs(): List<JobResponse> {
+	fun getUrgentJobs(page:Int): List<JobResponse> {
 		val user = authComponent.getUserTokenInfoOrNull()
 
-		return festivalJobRepository.findAllByDeadlineBetween(
+		val pageRequest = PageRequest.of(
+			(page - 1).coerceAtLeast(0),
+			20, // 한 페이지에 5개
+			Sort.by(Sort.Direction.ASC, "deadline") // 마감 임박순
+		)
+
+		val jobsPage = festivalJobRepository.findAllByDeadlineBetween(
 			LocalDate.now(),
-			LocalDate.now().plus(14, java.time.temporal.ChronoUnit.DAYS)
-			// 2주 이내
-		).sortedBy { it.deadline }.take(5).map {
+			LocalDate.now().plus(14, java.time.temporal.ChronoUnit.DAYS),
+			pageRequest
+		)
+
+		return jobsPage.content.map {
 			it.toResponse().apply {
 				val alreadyApplied = festivalJobApplyRepository.existsByJobIdAndApplicantUid(it.id!!, user?.uid)
 				this.alreadyApplied = alreadyApplied

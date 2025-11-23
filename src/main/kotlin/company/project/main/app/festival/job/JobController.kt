@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "Festival Job", description = "축제 알바")
@@ -26,8 +27,10 @@ class JobController(
 		summary = "마감이 임박한 축제 알바 리스트",
 		description = "마감이 임박한 축제 알바 리스트 입니다.",
 	)
-	fun getUrgentJobs(): ResponseEntity<List<JobResponse>> {
-		val result = jobService.getUrgentJobs()
+	fun getUrgentJobs(
+		@RequestParam page: Int,
+	): ResponseEntity<List<JobResponse>> {
+		val result = jobService.getUrgentJobs(page)
 		return ResponseEntity.ok().body(result)
 	}
 
