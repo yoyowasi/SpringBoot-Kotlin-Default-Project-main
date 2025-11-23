@@ -157,6 +157,7 @@ class JobService(
 		return true
 	}
 
+	@Transactional
 	fun getUrgentJobs(): List<JobResponse> {
 		val user = authComponent.getUserTokenInfoOrNull()
 
