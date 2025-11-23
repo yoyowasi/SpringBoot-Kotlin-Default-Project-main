@@ -145,9 +145,7 @@ class JobService(
 	}
 
 	fun getUrgentJobs(): List<JobResponse> {
-		val user = try {
-			authComponent.getUserTokenInfo()
-		}catch (e: ServerErrorException){ null }
+		val user = authComponent.getUserTokenInfoOrNull()
 
 		return festivalJobRepository.findAllByDeadlineBetween(
 			LocalDate.now(),
