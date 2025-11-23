@@ -11,12 +11,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @Configuration
 class RedisConfig {
-
-	@Bean
-	fun redisConnectionFactory(): RedisConnectionFactory {
-		return LettuceConnectionFactory()
-	}
-
 	@Bean
 	fun stringRedisTemplate(factory: RedisConnectionFactory): StringRedisTemplate {
 		return StringRedisTemplate(factory)
