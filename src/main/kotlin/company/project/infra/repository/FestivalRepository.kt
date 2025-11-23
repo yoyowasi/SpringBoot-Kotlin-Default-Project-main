@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
 interface FestivalRepository  : JpaRepository<Festival, Long> {
 	@Query("select f from Festival f where f.festivalName = ?1 and f.festivalStartDate = ?2")
@@ -16,4 +17,11 @@ interface FestivalRepository  : JpaRepository<Festival, Long> {
 		date: LocalDate,
 		pageable: PageRequest
 	): Page<Festival>
+
+	@Query("""
+    select distinct f.festival
+    from FestivalTagMap f
+    where upper(f.originalToken) like concat('%', upper(:keyword), '%')
+""")
+	fun searchFestivalByTagToken(@Param("keyword") keyword: String): List<Festival>?
 }

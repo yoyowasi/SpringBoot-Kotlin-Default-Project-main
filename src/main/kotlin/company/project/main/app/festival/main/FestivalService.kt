@@ -71,8 +71,8 @@ class FestivalService(
 	}
 	@Transactional
 	fun getSearch(keyword: String): List<FestivalListResponseDto?>? {
-		return festivalTagMapRepository.findByOriginalTokenLikeIgnoreCase(keyword)?.map {
-			it.festival?.toDto()
+		return festivalRepository.searchFestivalByTagToken(keyword)?.map {
+			it.toDto()
 		}
 	}
 	@Transactional

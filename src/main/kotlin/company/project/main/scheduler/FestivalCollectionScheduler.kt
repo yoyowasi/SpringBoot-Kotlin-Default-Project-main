@@ -12,7 +12,7 @@ class FestivalCollectionScheduler(
 	private val festivalCollection: FestivalCollection,
 	private val festivalSaveService: FestivalSaveService
 ) {
-	@Scheduled(fixedDelay = 24 * 60 * 60 * 1000)  // 24시간마다 실행
+//	@Scheduled(fixedDelay = 24 * 60 * 60 * 1000)  // 24시간마다 실행
 //	@Scheduled(cron = "0 0 0 * * ?")	// 00시에 매일 실행
 	fun festivalCollection() {
 		val festivalData = festivalCollection.getJsonData()
