@@ -31,7 +31,7 @@ class JobController(
 
 	@Api(
 		path = ApiPaths.JOB,
-		method = RequestMethod.GET,
+		method = RequestMethod.POST,
 		summary = "축제 알바 생성",
 		description = "축제 알바 생성 입니다.",
 	)
