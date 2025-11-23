@@ -39,6 +39,13 @@ object ApiPaths {
 	const val FESTIVAL_REVIEW_LIST = "$FESTIVAL/reviews"
 	const val FESTIVAL_REVIEW_DETAIL = "$FESTIVAL_REVIEW_LIST/{festivalReviewId}"
 
+	// 리뷰 좋아요
+	const val FESTIVAL_REVIEW_LIKE = "$FESTIVAL/reviews/{reviewId}/like"
+
+	// 리뷰 댓글
+	const val FESTIVAL_REVIEW_COMMENT = "$FESTIVAL/reviews/{reviewId}/comments"          // POST/GET
+	const val FESTIVAL_REVIEW_COMMENT_DETAIL = "$APP/festival/review-comments/{commentId}" // PUT/DELETE
+
 	private const val FESTIVAL_JOB = "$FESTIVAL/job"
 	const val JOB_LIST = "$FESTIVAL_JOB/list"
 	const val JOB = "$FESTIVAL_JOB/{festivalId}"

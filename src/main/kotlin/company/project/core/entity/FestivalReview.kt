@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import org.hibernate.annotations.ColumnDefault
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -23,11 +24,6 @@ open class FestivalReview {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "festival_id", nullable = false)
 	open var festival: Festival? = null
-
-	@Size(max = 100)
-	@NotNull
-	@Column(name = "user_uid", nullable = false, length = 100)
-	open var userUid: String? = null
 
 	@NotNull
 	@ColumnDefault("0")
@@ -48,11 +44,30 @@ open class FestivalReview {
 	@Column(name = "content", length = 1000)
 	open var content: String? = null
 
+	@NotNull
+	@Lob
+	@Enumerated(EnumType.STRING)
+	open var type: ReviewType? = null
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user_uid", nullable = false, referencedColumnName = "uid")
+	open var user: UserEntity? = null
+
 	fun toResponse() = FestivalReviewResponseDto(
 		id = this.id!!,
-		userUid = this.userUid!!,
-		rating = this.rating?:0,
+		userName = this.user?.name!!,
+		rating = this.rating ?: 0,
 		content = this.content,
-		createdAt = this.createdAt!!.let { LocalDateTime.ofInstant(it, java.time.ZoneId.systemDefault()) }
-	)
+		type = this.type!!,
+		likeCount = 0L,
+		liked = false,
+		festivalId = this.festival!!.id!!,
+		festivalName = this.festival!!.festivalName!!,
+		comments = emptyList(),
+		createdAt = this.createdAt!!.let { LocalDateTime.ofInstant(it, ZoneId.systemDefault()) },
+		)
+}
+enum class ReviewType {
+	REVIEW, TIP, MATE
 }
