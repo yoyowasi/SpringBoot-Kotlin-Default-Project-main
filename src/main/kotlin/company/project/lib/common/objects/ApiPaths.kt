@@ -51,7 +51,7 @@ object ApiPaths {
 	const val JOB_LIST = "$FESTIVAL_JOB/list"
 	const val JOB_CREATE = "$FESTIVAL_JOB/{festivalId}/create"
 	const val JOB_APPLY = "$JOB/apply"
-	const val JOB_APPLY_ACCEPT = "$JOB/apply/accept"
+	const val JOB_APPLY_ACCEPT = "$FESTIVAL_JOB/apply/{applyId}/accept"
 	const val JOB_APPLICANTS = "$JOB/applicants"
 
 
