@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class ReviewController(private val reviewService: ReviewService) {
 
 	@Api(
-		path = ApiPaths.REVIEW,
+		path = ApiPaths.FESTIVAL_REVIEW_LIST,
 		method = RequestMethod.GET,
 		summary = "축제 리뷰 리스트",
 		description = "축제 리뷰 리스트 입니다.",
@@ -30,7 +30,7 @@ class ReviewController(private val reviewService: ReviewService) {
 	}
 
 	@Api(
-		path = ApiPaths.REVIEW,
+		path = ApiPaths.FESTIVAL_REVIEW_CREATE,
 		method = RequestMethod.POST,
 		summary = "축제 리뷰 작성",
 		description = "축제 리뷰 작성 입니다.",
@@ -45,31 +45,31 @@ class ReviewController(private val reviewService: ReviewService) {
 	}
 
 	@Api(
-		path = ApiPaths.REVIEW,
+		path = ApiPaths.FESTIVAL_REVIEW_DETAIL,
 		method = RequestMethod.PUT,
 		summary = "축제 리뷰 수정",
 		description = "축제 리뷰 수정 입니다.",
 	)
 	@Auth(role = UserRole.USER)
 	fun updateFestivalReview(
-		@PathVariable festivalId: Long,
+		@PathVariable festivalReviewId: String,
 		review: FestivalReviewRequestDto,
 	): ResponseEntity<FestivalReviewResponseDto> {
-		val result = reviewService.updateReview(festivalId, review)
+		val result = reviewService.updateReview(festivalReviewId.toLong(), review)
 		return ResponseEntity.ok().body(result)
 	}
 
 	@Api(
-		path = ApiPaths.REVIEW,
+		path = ApiPaths.FESTIVAL_REVIEW_DETAIL,
 		method = RequestMethod.DELETE,
 		summary = "축제 리뷰 삭제",
 		description = "축제 리뷰 삭제 입니다.",
 	)
 	@Auth(role = UserRole.USER)
 	fun deleteFestivalReview(
-		@PathVariable festivalId: Long,
+		@PathVariable festivalReviewId: String,
 	): ResponseEntity<Unit> {
-		reviewService.deleteReview(festivalId)
+		reviewService.deleteReview(festivalReviewId.toLong())
 		return ResponseEntity.ok().build()
 	}
 

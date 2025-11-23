@@ -25,11 +25,19 @@ class ReviewService(
 		val festival = festivalRepository.findById(festivalId)
 			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_NOT_FOUND) }
 
+		val exist = festivalReviewRepository.existsByFestivalIdAndUserUid(festivalId, user.uid)
+
+		if(exist){
+			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_REVIEW_ALREADY_EXISTS)
+		}
+
 		val review = FestivalReview().apply {
 			this.festival = festival
 			this.userUid = user.uid
 			this.rating = review.rating
 			this.content = review.content
+			this.createdAt = Instant.now()
+			this.updatedAt = Instant.now()
 		}
 		festivalReviewRepository.save(review)
 		return review.toResponse()
@@ -42,25 +50,25 @@ class ReviewService(
 	}
 
 	@Transactional
-	fun updateReview(reviewId: Long, review: FestivalReviewRequestDto): FestivalReviewResponseDto {
+	fun updateReview(festivalReviewId: Long, review: FestivalReviewRequestDto): FestivalReviewResponseDto {
 		val user = authComponent.getUserTokenInfo()
 
-		val review = festivalReviewRepository.findById(reviewId)
+		val reviewEntity = festivalReviewRepository.findById(festivalReviewId)
 			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_NOT_FOUND) }
 
-		if (review.userUid != user.uid) {
+		if (reviewEntity.userUid != user.uid) {
 			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_REVIEW_OWNERSHIP_MISMATCH)
 		}
-		review.rating = review.rating
-		review.content = review.content
-		review.updatedAt = Instant.now()
-		return review.toResponse()
+		reviewEntity.rating = review.rating
+		reviewEntity.content = review.content
+		reviewEntity.updatedAt = Instant.now()
+		return reviewEntity.toResponse()
 	}
 
 	@Transactional
-	fun deleteReview(reviewId: Long) {
+	fun deleteReview(festivalReviewId: Long) {
 		val user = authComponent.getUserTokenInfo()
-		val review = festivalReviewRepository.findById(reviewId)
+		val review = festivalReviewRepository.findById(festivalReviewId)
 			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_NOT_FOUND) }
 		if (review.userUid != user.uid) {
 			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_REVIEW_DELETE_OWNERSHIP_MISMATCH)

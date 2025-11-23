@@ -31,6 +31,8 @@ enum class INTERNAL_ERROR_CODE(val code: Int, val message: String, val httpStatu
 	FESTIVAL_REVIEW_OWNERSHIP_MISMATCH(151, "자신의 리뷰만 수정할 수 있습니다.", HttpStatus.FORBIDDEN, ErrorStatus.WARN),
 	FESTIVAL_REVIEW_DELETE_OWNERSHIP_MISMATCH(152, "자신의 리뷰만 삭제할 수 있습니다.", HttpStatus.FORBIDDEN, ErrorStatus.WARN),
 	FESTIVAL_REVIEW_NOT_FOUND(153, "리뷰를 찾을 수 없습니다.", HttpStatus.NOT_FOUND, ErrorStatus.WARN),
+	FESTIVAL_REVIEW_ALREADY_EXISTS(154, "이미 작성한 리뷰가 존재합니다.", HttpStatus.CONFLICT, ErrorStatus.WARN),
+
 
 	//Festival JOB
 	FESTIVAL_JOB_NOT_FOUND(160, "존재하지 않는 축제 알바", HttpStatus.NOT_FOUND, ErrorStatus.WARN),

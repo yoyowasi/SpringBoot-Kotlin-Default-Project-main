@@ -7,4 +7,5 @@ interface FestivalReviewRepository : JpaRepository<FestivalReview, Long> {
 	fun findAllByFestivalIdOrderByCreatedAtDesc(festivalId: Long): List<FestivalReview>
 
 	fun existsByIdAndUserUid(id: Long, userUid: String): Boolean
+	fun existsByFestivalIdAndUserUid(festivalId: Long, uid: String): Boolean
 }

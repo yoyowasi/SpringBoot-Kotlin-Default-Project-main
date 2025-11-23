@@ -30,8 +30,13 @@ object ApiPaths {
 	const val FESTIVAL_SEARCH = "$FESTIVAL/{keyword}/search"
 	const val FESTIVAL_TOGGLE_LIKE = "$FESTIVAL/{festivalId}/like"
 
-	private const val FESTIVAL_REVIEW = "$FESTIVAL/review"
-	const val REVIEW = "$FESTIVAL_REVIEW/{festivalId}"
+	private const val FESTIVAL_REVIEW = "$FESTIVAL/{festivalId}/reviews"
+
+	// review actions
+	const val FESTIVAL_REVIEW_CREATE = FESTIVAL_REVIEW
+	const val FESTIVAL_REVIEW_LIST = FESTIVAL_REVIEW
+
+	const val FESTIVAL_REVIEW_DETAIL = "$FESTIVAL/reviews/{festivalReviewId}"
 
 	private const val FESTIVAL_JOB = "$FESTIVAL/job"
 	const val JOB_LIST = "$FESTIVAL_JOB/list"
