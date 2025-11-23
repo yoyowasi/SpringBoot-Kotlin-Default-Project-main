@@ -59,6 +59,7 @@ class FestivalService(
 	@Transactional
 	fun toggleFestivalLike(festivalId: Long): FestivalLikeResponseDto {
 		val user = authComponent.getUserTokenInfo()
+		var likeToggle: Boolean
 		val festival = festivalRepository.findById(festivalId)
 			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_NOT_FOUND) }
 
@@ -72,23 +73,23 @@ class FestivalService(
 				this.like = true
 				this.createdAt = Instant.now()
 			}
-			userFestivalLikeRepository.save(like)
+			likeToggle = userFestivalLikeRepository.save(like).like == true
 			festivalComponent.incr(festivalId)
 		} else {
 			val userFestivalLike = userFestivalLikeRepository.findByUserUidAndFestival_Id(user.uid, festivalId)
 			if(userFestivalLike.like == true) { // 좋아요 취소
 				userFestivalLike.like = false
-				userFestivalLikeRepository.save(userFestivalLike)
+				likeToggle = userFestivalLikeRepository.save(userFestivalLike).like == true
 				festivalComponent.decr(festivalId)
 			}else{ // 좋아요 다시 누르기
 				userFestivalLike.like = true
-				userFestivalLikeRepository.save(userFestivalLike)
+				likeToggle = userFestivalLikeRepository.save(userFestivalLike).like == true
 				festivalComponent.incr(festivalId)
 			}
 		}
 		return FestivalLikeResponseDto(
 			festivalId = festivalId,
-			like = !exists,
+			like = likeToggle,
 			likeCount = newCount
 		)
 	}
