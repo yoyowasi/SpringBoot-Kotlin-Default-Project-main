@@ -14,6 +14,7 @@ import company.project.lib.common.component.AuthComponent
 import company.project.lib.common.enum.INTERNAL_ERROR_CODE
 import company.project.lib.common.exception.ServerErrorException
 import jakarta.transaction.Transactional
+import java.time.Instant
 import java.time.LocalDate
 import org.springframework.stereotype.Service
 
@@ -41,6 +42,11 @@ class JobService(
 			this.preference = request.preference.joinToString(",")
 			this.isCertified = request.isCertified
 			this.deadline = request.deadline
+			this.isOpen = true
+			this.applicantCount = 0
+			this.hiredCount = 0
+			this.createdAt = Instant.now()
+			this.updatedAt = Instant.now()
 		}
 		festivalJobRepository.save(job)
 		return job.toResponse()
@@ -65,6 +71,7 @@ class JobService(
 			this.location = req.location
 			this.introduction = req.introduction
 			this.career = req.career
+			this.createdAt = Instant.now()
 		}
 
 		job.applicantCount = job.applicantCount?.plus(1)
@@ -106,6 +113,7 @@ class JobService(
 			location = req.location
 			introduction = req.introduction
 			career = req.career
+			updatedAt = Instant.now()
 		}
 
 		return apply.toResponse()

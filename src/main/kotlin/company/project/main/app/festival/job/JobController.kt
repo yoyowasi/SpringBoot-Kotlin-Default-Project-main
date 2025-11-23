@@ -4,7 +4,9 @@ import company.project.core.dto.app.festival.request.JobApplyRequest
 import company.project.core.dto.app.festival.request.JobCreateRequest
 import company.project.core.dto.app.festival.response.JobApplyResponse
 import company.project.core.dto.app.festival.response.JobResponse
+import company.project.core.entity.UserRole
 import company.project.lib.common.annotation.Api
+import company.project.lib.common.annotation.Auth
 import company.project.lib.common.objects.ApiPaths
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
@@ -35,6 +37,7 @@ class JobController(
 		summary = "축제 알바 생성",
 		description = "축제 알바 생성 입니다.",
 	)
+	@Auth(role = UserRole.USER)
 	fun createJob(
 		@PathVariable festivalId: Long,
 		@RequestBody request: JobCreateRequest
@@ -49,6 +52,7 @@ class JobController(
 		summary = "축제 알바 지원",
 		description = "축제 알바 지원 입니다.",
 	)
+	@Auth(role = UserRole.USER)
 	fun applyJob(
 		@PathVariable jobId: Long,
 		@RequestBody request: JobApplyRequest
@@ -62,6 +66,7 @@ class JobController(
 		summary = "축제 알바 지원 수정",
 		description = "축제 알바 지원 수정 입니다.",
 	)
+	@Auth(role = UserRole.USER)
 	fun updateJobApply(
 		@PathVariable jobId: Long,
 		@RequestBody request: JobApplyRequest
@@ -75,6 +80,7 @@ class JobController(
 		summary = "축제 알바 지원 취소",
 		description = "축제 알바 지원 취소 입니다.",
 	)
+	@Auth(role = UserRole.USER)
 	fun cancelJobApply(
 		@PathVariable jobId: Long,
 	): ResponseEntity<Boolean> {
@@ -87,6 +93,7 @@ class JobController(
 		summary = "축제 알바 지원자 리스트",
 		description = "축제 알바 지원자 리스트 입니다.",
 	)
+	@Auth(role = UserRole.USER)
 	fun getJobApplicants(
 		@PathVariable jobId: Long,
 	): ResponseEntity<List<JobApplyResponse>> {
@@ -99,6 +106,7 @@ class JobController(
 		summary = "축제 알바 지원자 수락",
 		description = "축제 알바 지원자 수락 입니다.",
 	)
+	@Auth(role = UserRole.USER)
 	fun acceptJobApplicant(
 		@PathVariable applyId: Long,
 	): ResponseEntity<Boolean> {
