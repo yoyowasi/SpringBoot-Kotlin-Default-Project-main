@@ -86,6 +86,7 @@ open class FestivalJob {
 			jobId = this@FestivalJob.id!!,
 			festivalId = this@FestivalJob.festival!!.id!!,
 			employerName = "",
+			employerUid = this@FestivalJob.employerUid!!,
 			title = this@FestivalJob.title!!,
 			shortDesc = this@FestivalJob.shortDesc,
 			detailDesc = this@FestivalJob.detailDesc,
