@@ -24,4 +24,4 @@ spec:
                 name: project-credentials
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: "local"
+              value: "dev"
