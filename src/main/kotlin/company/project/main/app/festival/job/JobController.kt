@@ -32,7 +32,7 @@ class JobController(
 	}
 
 	@Api(
-		path = ApiPaths.JOB,
+		path = ApiPaths.JOB_CREATE,
 		method = RequestMethod.POST,
 		summary = "축제 알바 생성",
 		description = "축제 알바 생성 입니다.",
@@ -45,6 +45,34 @@ class JobController(
 		val result = jobService.createJob(festivalId, request)
 		return ResponseEntity.ok().body(result)
 	}
+	@Api(
+		path = ApiPaths.JOB,
+		method = RequestMethod.PUT,
+		summary = "축제 알바 수정",
+		description = "축제 알바 수정 입니다.",
+	)
+	@Auth(role = UserRole.USER)
+	fun updateJob(
+		@PathVariable jobId: Long,
+		@RequestBody request: JobCreateRequest
+	): ResponseEntity<JobResponse?> {
+		val result = jobService.updateJob(jobId, request)
+		return ResponseEntity.ok().body(result)
+	}
+	@Api(
+		path = ApiPaths.JOB,
+		method = RequestMethod.DELETE,
+		summary = "축제 알바 삭제",
+		description = "축제 알바 삭제 입니다.",
+	)
+	@Auth(role = UserRole.USER)
+	fun deleteJob(
+		@PathVariable jobId: Long,
+	): ResponseEntity<Boolean> {
+		val result = jobService.deleteJob(jobId)
+		return ResponseEntity.ok().body(result)
+	}
+
 
 	@Api(
 		path = ApiPaths.JOB_APPLY,

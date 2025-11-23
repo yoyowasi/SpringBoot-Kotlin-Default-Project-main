@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class JobResponse(
 	val jobId: Long,
 	val festivalId: Long,
-	val employerUid: String,
+	var employerName: String,
 	val title: String,
 	val shortDesc: String?,
 	val detailDesc: String?,

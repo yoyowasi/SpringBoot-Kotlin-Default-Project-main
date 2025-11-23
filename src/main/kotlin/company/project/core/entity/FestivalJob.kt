@@ -85,7 +85,7 @@ open class FestivalJob {
 		return JobResponse(
 			jobId = this@FestivalJob.id!!,
 			festivalId = this@FestivalJob.festival!!.id!!,
-			employerUid = this@FestivalJob.employerUid!!,
+			employerName = "",
 			title = this@FestivalJob.title!!,
 			shortDesc = this@FestivalJob.shortDesc,
 			detailDesc = this@FestivalJob.detailDesc,

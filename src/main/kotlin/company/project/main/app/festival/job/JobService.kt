@@ -10,6 +10,7 @@ import company.project.core.entity.FestivalJobApply
 import company.project.infra.repository.FestivalJobApplyRepository
 import company.project.infra.repository.FestivalJobRepository
 import company.project.infra.repository.FestivalRepository
+import company.project.infra.repository.UserRepository
 import company.project.lib.common.component.AuthComponent
 import company.project.lib.common.enum.INTERNAL_ERROR_CODE
 import company.project.lib.common.exception.ServerErrorException
@@ -23,7 +24,8 @@ class JobService(
 	private val festivalRepository: FestivalRepository,
 	private val authComponent: AuthComponent,
 	private val festivalJobRepository: FestivalJobRepository,
-	private val festivalJobApplyRepository: FestivalJobApplyRepository
+	private val festivalJobApplyRepository: FestivalJobApplyRepository,
+	private val userRepository: UserRepository
 ) {
 	@Transactional
 	fun createJob(festivalId: Long, request: JobCreateRequest): JobResponse {
@@ -49,7 +51,9 @@ class JobService(
 			this.updatedAt = Instant.now()
 		}
 		festivalJobRepository.save(job)
-		return job.toResponse()
+		return job.toResponse().copy(
+			employerName = user.name?:"알 수 없음"
+		)
 	}
 	@Transactional
 	fun jobApply(jobId: Long, req: JobApplyRequest): JobApplyResponse {
@@ -164,7 +168,47 @@ class JobService(
 			it.toResponse().apply {
 				val alreadyApplied = festivalJobApplyRepository.existsByJobIdAndApplicantUid(it.id!!, user?.uid)
 				this.alreadyApplied = alreadyApplied
+				this.employerName = it.employerUid?.let { uid -> userRepository.findByUid(uid) }?.name ?: "알 수 없음"
 			}
 		}
 	}
+
+	@Transactional
+	fun updateJob(jobId: Long, request: JobCreateRequest): JobResponse {
+		val user = authComponent.getUserTokenInfo()
+		val job = festivalJobRepository.findById(jobId)
+			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_FOUND) }
+		if (job.employerUid != user.uid) {
+			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_YOUR_JOB_POSTING)
+		}
+		job.apply {
+			this.title = request.title
+			this.shortDesc = request.shortDesc
+			this.detailDesc = request.detailDesc
+			this.hourlyPay = request.hourlyPay
+			this.workTime = request.workTime
+			this.workPeriod = request.workPeriod
+			this.preference = request.preference.joinToString(",")
+			this.isCertified = request.isCertified
+			this.deadline = request.deadline
+			this.updatedAt = Instant.now()
+		}
+		festivalJobRepository.save(job)
+		return job.toResponse().copy(
+			employerName = user.name?:"알 수 없음"
+		)
+	}
+
+	@Transactional
+	fun deleteJob(jobId: Long): Boolean {
+		val user = authComponent.getUserTokenInfo()
+		val job = festivalJobRepository.findById(jobId)
+			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_FOUND) }
+		if (job.employerUid != user.uid) {
+			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_YOUR_JOB_POSTING)
+		}
+		festivalJobRepository.delete(job)
+		return true
+	}
+
 }
