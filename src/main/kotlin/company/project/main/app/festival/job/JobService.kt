@@ -129,17 +129,23 @@ class JobService(
 	fun getApplicants(jobId: Long): List<JobApplyResponse> {
 		val user = authComponent.getUserTokenInfo()
 
+		var list: List<FestivalJobApply> = listOf()
+
 		val job = festivalJobRepository.findById(jobId)
 			.orElseThrow { ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_FOUND) }
 
 		if (job.employerUid != user.uid) {
-			throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_YOUR_JOB_POSTING)
+			if(festivalJobApplyRepository.existsByJobIdAndApplicantUid(jobId, user.uid) == true) {
+				val apply = festivalJobApplyRepository.findByJobIdAndApplicantUid(jobId, user.uid)!!
+				list = listOf(apply)
+			}else{
+				throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_NOT_YOUR_JOB_POSTING)
+			}
+		}else{ // 고용주
+			list = festivalJobApplyRepository.findAllByJobId(jobId)
+			list.forEach { it.isRead = true } // once read → cannot modify/cancel
+
 		}
-
-		val list = festivalJobApplyRepository.findAllByJobId(jobId)
-
-		list.forEach { it.isRead = true } // once read → cannot modify/cancel
-
 		return list.map { it.toResponse() }
 	}
 	@Transactional
