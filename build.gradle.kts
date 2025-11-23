@@ -13,7 +13,7 @@ val imageTargetEnv =
 	if (project.hasProperty("projectDataImageTargetEnv")) {
 		project.property("projectDataImageTargetEnv")
 	} else {
-		System.getenv("SPRING_PROFILES_ACTIVE") ?: "local"
+		System.getenv("SPRING_PROFILES_ACTIVE") ?: "dev"
 	}
 
 group = "project"
