@@ -2,15 +2,17 @@ spring:
   config:
     activate:
       on-profile: dev
-  cloud:
-    gcp:
-      sql:
-        enabled: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://[dev-db-host]:3306/[project-name]?zeroDateTimeBehavior=convertToNull"
-    username: root
-    password: ${MYSQL_PASSWORD_DEV}
+    url: ${DB_HOST}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -23,6 +25,13 @@ spring:
       ddl-auto: validate
     open-in-view: false
     show_sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog-master.yml
+  data:
+    redis:
+      host: redis
+      port: 6379
 
 springdoc:
   swagger-ui:
@@ -31,14 +40,30 @@ springdoc:
     persist-authorization: true
 
 logging:
-  config: classpath:logback-spring-dev.xml
+  config: classpath:logback-spring-local.xml
   slack:
     webhook:
       url: ${LOGGING_SLACK_WEBHOOK_URL}
 
 swagger:
-  url: https://[dev-server-url]
-  description: Dev Server
+  url: https://noma.minq.work/
+#  url: http://localhost:8080/
+  description: Local Server
 
 aes:
   key: ${AES_KEY}
+
+jwt:
+  access_token_expiration_time: 600 # 10분
+  refresh_token_expiration_time: 604800 # 7일
+  secret: ${JWT_SECRET}
+
+sha:
+  key: ${SHA_KEY}
+
+api:
+  key: ${DATA_GO_API_KEY}
+
+naver:
+  client_id: ${NAVER_CLIENT_ID}
+  client_secret: ${NAVER_CLIENT_SECRET}
