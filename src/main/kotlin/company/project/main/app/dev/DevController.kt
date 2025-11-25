@@ -1,5 +1,6 @@
 package company.project.main.app.dev
 
+import company.project.core.entity.UserRole
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.context.annotation.Profile
 import org.springframework.http.ResponseEntity
@@ -30,23 +31,21 @@ class DevController(
 		@PathVariable pw: String,
 	): ResponseEntity<String> = ResponseEntity.ok().body(sha.encrypt(pw, SHAType.SHA256))
 
-	@Auth
 	@Api(
 		path = ApiPaths.CPU_BURN,
 		method = RequestMethod.GET,
 		summary = "CPU 부하 테스트",
 		description = "CPU 부하 테스트를 진행합니다.",
 	)
+	@Auth(role = UserRole.ADMIN)
 	fun cpuBurn(
 		@PathVariable seconds: Long,
 	): ResponseEntity<String> {
 		val end = System.currentTimeMillis() + (seconds * 1000)
-
 		// CPU fully busy loop
 		while (System.currentTimeMillis() < end) {
 			Math.sqrt(Math.random())
 		}
-
 		return ResponseEntity.ok().body("burned $seconds seconds")
 	}
 }

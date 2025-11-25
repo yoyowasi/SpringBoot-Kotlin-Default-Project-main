@@ -21,7 +21,7 @@ object ApiPaths {
 
 	// dev
 	private const val DEV = "$APP/dev"
-	const val CPU_BURN = "$DEV/cpu-burn"
+	const val CPU_BURN = "$DEV/cpu-burn/{seconds}"
 	const val GET_PW = "$DEV/get-pw/{pw}"
 
 	// festival
