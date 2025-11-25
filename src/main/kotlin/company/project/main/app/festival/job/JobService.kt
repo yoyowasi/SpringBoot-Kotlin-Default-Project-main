@@ -27,7 +27,8 @@ class JobService(
 	private val authComponent: AuthComponent,
 	private val festivalJobRepository: FestivalJobRepository,
 	private val festivalJobApplyRepository: FestivalJobApplyRepository,
-	private val userRepository: UserRepository
+	private val userRepository: UserRepository,
+	private val jobComponent: JobComponent
 ) {
 	@Transactional
 	fun createJob(festivalId: Long, request: JobCreateRequest): JobResponse {
@@ -47,14 +48,13 @@ class JobService(
 			this.isCertified = request.isCertified
 			this.deadline = request.deadline
 			this.isOpen = true
-			this.applicantCount = 0
 			this.hiredCount = 0
 			this.createdAt = Instant.now()
 			this.updatedAt = Instant.now()
 		}
 		festivalJobRepository.save(job)
 		return job.toResponse().copy(
-			employerName = user.name?:"알 수 없음"
+			employerName = user.name?:"알 수 없음",
 		)
 	}
 	@Transactional
@@ -80,11 +80,8 @@ class JobService(
 			this.createdAt = Instant.now()
 			this.updatedAt = Instant.now()
 		}
-
-		job.applicantCount = job.applicantCount?.plus(1)
-
 		festivalJobApplyRepository.save(apply)
-		festivalJobRepository.save(job)
+		jobComponent.incr(jobId)
 
 		return apply.toResponse()
 	}
@@ -98,9 +95,7 @@ class JobService(
 		if (apply.isRead) throw ServerErrorException(INTERNAL_ERROR_CODE.FESTIVAL_JOB_ALREADY_READ_BY_EMPLOYER)
 
 		festivalJobApplyRepository.delete(apply)
-
-		val job = apply.job!!
-		job.applicantCount = job.applicantCount?.minus(1)
+		jobComponent.decr(jobId)
 
 		return true
 	}
@@ -188,6 +183,7 @@ class JobService(
 				this.status = festivalJobApplyRepository.findByJobIdAndApplicantUid(it.id!!, user?.uid ?: "")?.status
 					?: ApplyStatus.NONE
 				this.employerName = it.employerUid?.let { uid -> userRepository.findByUid(uid) }?.name ?: "알 수 없음"
+				this.applicantCount = jobComponent.getCount(jobId) ?: 0L
 			}
 		}
 	}
@@ -214,7 +210,8 @@ class JobService(
 		}
 		festivalJobRepository.save(job)
 		return job.toResponse().copy(
-			employerName = user.name?:"알 수 없음"
+			employerName = user.name?:"알 수 없음",
+			applicantCount = jobComponent.getCount(jobId) ?: 0L
 		)
 	}
 

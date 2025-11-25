@@ -20,7 +20,7 @@ data class JobResponse(
 	val isCertified: Boolean,
 	val isOpen: Boolean,
 	val deadline: LocalDate?,
-	val applicantCount: Int,
+	var applicantCount: Long,
 	val hiredCount: Int,
 	var status: ApplyStatus,
 	var alreadyApplied: Boolean?=false,

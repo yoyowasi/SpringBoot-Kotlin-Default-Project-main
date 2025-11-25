@@ -66,10 +66,6 @@ open class FestivalJob {
 	open var deadline: LocalDate? = null
 
 	@ColumnDefault("0")
-	@Column(name = "applicant_count")
-	open var applicantCount: Int? = null
-
-	@ColumnDefault("0")
 	@Column(name = "hired_count")
 	open var hiredCount: Int? = null
 
@@ -99,7 +95,7 @@ open class FestivalJob {
 			isCertified = this@FestivalJob.isCertified == true,
 			isOpen = this@FestivalJob.isOpen == true,
 			deadline = this@FestivalJob.deadline,
-			applicantCount = this@FestivalJob.applicantCount ?: 0,
+			applicantCount = 0,
 			hiredCount = this@FestivalJob.hiredCount ?: 0,
 			alreadyApplied = false,
 			status = ApplyStatus.NONE,

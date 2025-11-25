@@ -13,6 +13,12 @@ spring:
     url: ${DB_HOST}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 3000
+      idle-timeout: 10000
+      max-lifetime: 60000
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect

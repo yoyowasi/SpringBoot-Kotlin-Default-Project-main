@@ -16,4 +16,5 @@ data class LoggerInputDto(
 	val ip: String? = null,
 	val referer: String? = null,
 	val headers: Map<String, String>? = null,
+	val exception: Throwable? = null
 )

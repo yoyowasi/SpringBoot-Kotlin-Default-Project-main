@@ -16,6 +16,12 @@ spring:
     url: ${DB_HOST}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 3000
+      idle-timeout: 10000
+      max-lifetime: 60000
 
   jpa:
     database: mysql
@@ -23,12 +29,12 @@ spring:
     properties:
       hibernate:
         storage_engine: innodb
-        format_sql: true
-        use_sql_comments: true
+        format_sql: false
+        use_sql_comments: false
     hibernate:
       ddl-auto: validate
     open-in-view: false
-    show_sql: true
+    show_sql: false
 
   liquibase:
     enabled: true

@@ -56,7 +56,7 @@ class ReviewController(private val reviewService: ReviewService) {
 	@Auth(role = UserRole.USER)
 	fun createFestivalReview(
 		@PathVariable festivalId: Long,
-		review: FestivalReviewRequestDto,
+		@RequestBody review: FestivalReviewRequestDto,
 	): ResponseEntity<FestivalReviewResponseDto> {
 		val result = reviewService.createReview(festivalId, review)
 		return ResponseEntity.ok().body(result)
@@ -71,7 +71,7 @@ class ReviewController(private val reviewService: ReviewService) {
 	@Auth(role = UserRole.USER)
 	fun updateFestivalReview(
 		@PathVariable festivalReviewId: String,
-		review: FestivalReviewRequestDto,
+		@RequestBody review: FestivalReviewRequestDto,
 	): ResponseEntity<FestivalReviewResponseDto> {
 		val result = reviewService.updateReview(festivalReviewId.toLong(), review)
 		return ResponseEntity.ok().body(result)

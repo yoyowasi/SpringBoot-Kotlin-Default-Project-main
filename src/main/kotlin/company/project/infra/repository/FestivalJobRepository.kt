@@ -1,7 +1,6 @@
 package company.project.infra.repository
 
 import company.project.core.entity.FestivalJob
-import java.awt.print.Pageable
 import java.time.LocalDate
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest

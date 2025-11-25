@@ -91,6 +91,7 @@ class ReviewService(
 		}
 		reviewEntity.rating = review.rating
 		reviewEntity.content = review.content
+		reviewEntity.type = review.type
 		reviewEntity.updatedAt = Instant.now()
 		return reviewEntity.toResponse()
 	}

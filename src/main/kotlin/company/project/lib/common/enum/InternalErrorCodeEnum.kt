@@ -39,7 +39,7 @@ enum class INTERNAL_ERROR_CODE(val code: Int, val message: String, val httpStatu
 	FESTIVAL_JOB_APPLY_OWNERSHIP_MISMATCH(161, "자신의 지원서만 확인할 수 있습니다.", HttpStatus.FORBIDDEN, ErrorStatus.WARN),
 	FESTIVAL_JOB_ALREADY_APPLIED(162, "이미 지원한 알바입니다.", HttpStatus.CONFLICT, ErrorStatus.WARN),
 	FESTIVAL_JOB_APPLY_NOT_FOUND(163, "존재하지 않는 지원서", HttpStatus.NOT_FOUND, ErrorStatus.WARN),
-	FESTIVAL_JOB_ALREADY_READ_BY_EMPLOYER(164, "이미 사장님이 확인한 지원서입니다.", HttpStatus.CONFLICT, ErrorStatus.WARN),
+	FESTIVAL_JOB_ALREADY_READ_BY_EMPLOYER(164, "이미 채용자가 확인한 지원서입니다.", HttpStatus.CONFLICT, ErrorStatus.WARN),
 	FESTIVAL_JOB_NOT_YOUR_JOB_POSTING(165, "자신의 알바 공고만 확인할 수 있습니다.", HttpStatus.FORBIDDEN, ErrorStatus.WARN),
 	FESTIVAL_JOB_NOY_YOUR_APPLICANT(166, "지원자 본인이 아닙니다.", HttpStatus.FORBIDDEN, ErrorStatus.WARN),
 
