@@ -37,7 +37,7 @@ class DevController(
 		summary = "CPU 부하 테스트",
 		description = "CPU 부하 테스트를 진행합니다.",
 	)
-	@Auth(role = UserRole.ADMIN)
+	@Auth(UserRole.ADMIN)
 	fun cpuBurn(
 		@PathVariable seconds: Long,
 	): ResponseEntity<String> {

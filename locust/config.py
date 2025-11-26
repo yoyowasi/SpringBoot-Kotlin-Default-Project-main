@@ -2,8 +2,8 @@
 # TEST CONFIGURATION
 # -------------------------------
 
-# 1/1000 확률로 알바 생성
-JOB_CREATE_PROBABILITY = 0.001
+# 1/100 확률로 알바 생성
+JOB_CREATE_PROBABILITY = 0.01
 
 # 리뷰 글 작성 확률
 REVIEW_CREATE_PROB = 0.4       # 40% 확률
